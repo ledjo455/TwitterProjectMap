@@ -33,6 +33,12 @@ public class TestScanner {
     }
 
     @Test
+    public void testNot(){
+        String expected[] = {"not", "not", "fred"};
+        runTest("not not fred", expected);
+    }
+
+    @Test
     public void testOr() {
         String expected[] = { "trump", "or", "evil" };
         runTest("trump or evil", expected);
