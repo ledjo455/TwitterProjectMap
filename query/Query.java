@@ -6,11 +6,13 @@ import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.Layer;
 import org.openstreetmap.gui.jmapviewer.MapMarkerCircle;
 import twitter4j.Status;
+import ui.MapMarkerFancy;
 import ui.MapMarkerSimple;
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
+import static util.Util.imageFromURL;
 import static util.Util.statusCoordinate;
 
 
@@ -33,7 +35,6 @@ public class Query implements Observer {
     private JCheckBox checkBox;
 
     private List<MapMarkerCircle> mapMarker = new ArrayList<>();
-    private MapMarkerSimple marker;
 
     public Color getColor() {
         return color;
@@ -62,6 +63,7 @@ public class Query implements Observer {
     public void setVisible(boolean visible) {
         layer.setVisible(visible);
     }
+    
 
     public boolean getVisible() {
         return layer.isVisible();
@@ -100,14 +102,20 @@ public class Query implements Observer {
 
     private void checkFilterStatus(Status status) {
         Coordinate coord = statusCoordinate(status);
-        marker = new MapMarkerSimple(layer, coord);
+        String tweetContent = status.getText();
+        String profilePicUrl = status.getUser().getProfileImageURL();
+        Image profilePicture = imageFromURL(profilePicUrl);
+
+        //MapMarkerSimple simple = new MapMarkerSimple(layer, coord); //task4, irrelevant
+        MapMarkerFancy fancy = new MapMarkerFancy(layer, coord, color, tweetContent, profilePicture);
+
         if (filter.matches(status)) {
-            mapMarker.add(marker);
-            map.addMapMarker(marker);
+            mapMarker.add(fancy);
+            map.addMapMarker(fancy);
         }
         else{
-            mapMarker.remove(marker);
-            map.removeMapMarker(marker); }
+            mapMarker.remove(fancy);
+            map.removeMapMarker(fancy); }
     }
 
 }
