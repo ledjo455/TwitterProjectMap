@@ -8,7 +8,6 @@ import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 import org.openstreetmap.gui.jmapviewer.tilesources.BingAerialTileSource;
 import query.Query;
 import twitter.LiveTwitterSource;
-import twitter.PlaybackTwitterSource;
 import twitter.TwitterSource;
 import util.SphericalGeometry;
 
@@ -33,7 +32,7 @@ public class Application extends JFrame {
     private List<Query> queries = new ArrayList<>();
     // The source of tweets, a TwitterSource, either live or playback
     private TwitterSource twitterSource;
-
+    private  String htmlContent;
     private void initialize() {
         // To use the live twitter stream, use the following line
          twitterSource = new LiveTwitterSource();
@@ -121,10 +120,32 @@ public class Application extends JFrame {
         map().addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseMoved(MouseEvent e) {
+                String nameInfo = "";
+                String imageInfo = "";
+                String tweet = "";
+                Color color ;
+
+
                 Point p = e.getPoint();
                 ICoordinate pos = map().getPosition(p);
                 // TODO: Use the following method to set the text that appears at the mouse cursor
-                map().setToolTipText("This is a tooltip");
+                map().setToolTipText("");
+                List<MapMarker> mapMarkers = getMarkersCovering(pos, pixelWidth(p));
+                if (!mapMarkers.isEmpty()) {
+                    htmlContent ="<!DOCTYPE html>";
+                    htmlContent = "<html>";
+                    for (MapMarker mapmark : mapMarkers) {
+                        MapMarkerFancy mapMarkerFancy = (MapMarkerFancy) mapmark;
+                        color = mapMarkerFancy.getColor();
+                        String hex = "#"+Integer.toHexString(color.getRGB()).substring(2);
+                        nameInfo += "<p>" + mapMarkerFancy.getName()+ " (@" + mapMarkerFancy.getUsername()+")</p>";
+                        imageInfo += "<p style=\"background-color:"+hex+";\">";
+                        imageInfo += "<img src=" + mapMarkerFancy.getprofilePictureURL() + ">";
+                        tweet += mapMarkerFancy.getTweetContent() + "</p>";
+                    }
+                    htmlContent += nameInfo + imageInfo + tweet +"</html>";
+                    map().setToolTipText(htmlContent);
+                }
             }
         });
     }

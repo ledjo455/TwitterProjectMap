@@ -13,19 +13,34 @@ public class MapMarkerFancy extends MapMarkerCircle {
     private final Color color;
     private final String tweetContent;
     private final Image profilePicture;
+    private final String profilePictureURL;
+    private final String username;
+    private final String name;
 
-
-    public MapMarkerFancy(Layer layer, Coordinate coord, Color color, String tweetContent, Image profilePicture) {
+    public MapMarkerFancy(Layer layer, Coordinate coord, Color color, String tweetContent, Image profilePicture, String profilePictureURL, String username, String name) {
         super(layer, null, coord, defaultMarkerSize, STYLE.FIXED, getDefaultStyle());
         this.color = color;
         this.coord = coord;
         this.tweetContent = tweetContent;
         this.profilePicture = profilePicture;
+        this.profilePictureURL = profilePictureURL;
+        this.username = username;
+        this.name = name;
 
         setColor(Color.BLACK);
         setBackColor(color);
     }
 
+    public String getprofilePictureURL() {
+        return profilePictureURL;
+    }
+    public Image getProfilePicture(){return profilePicture;}
+    public String getTweetContent() {
+        return tweetContent;
+    }
+    public String getUsername() {return username;};
+    public String getName() {return name;}
+    public Color getColor() {return color;}
     //displaying the circle with color and profile pic on the map (override from MapMarkerCircle)
     @Override
     public void paint(Graphics g, Point position, int radius) {

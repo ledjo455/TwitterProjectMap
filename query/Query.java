@@ -105,10 +105,11 @@ public class Query implements Observer {
         String tweetContent = status.getText();
         String profilePicUrl = status.getUser().getProfileImageURL();
         Image profilePicture = imageFromURL(profilePicUrl);
+        String username = status.getUser().getScreenName();
+        String name = status.getUser().getName();
 
         //MapMarkerSimple simple = new MapMarkerSimple(layer, coord); //task4, irrelevant
-        MapMarkerFancy fancy = new MapMarkerFancy(layer, coord, color, tweetContent, profilePicture);
-
+        MapMarkerFancy fancy = new MapMarkerFancy(layer, coord, color, tweetContent, profilePicture, profilePicUrl, username, name);
         if (filter.matches(status)) {
             mapMarker.add(fancy);
             map.addMapMarker(fancy);
