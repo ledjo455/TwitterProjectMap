@@ -13,6 +13,10 @@ import twitter4j.conf.ConfigurationBuilder;
 public class LiveTwitterSource extends TwitterSource {
     private TwitterStream twitterStream;
     private StatusListener listener;
+    private String OAuthConsumerKey;
+    private String OAuthConsumerSecret;
+    private String OAuthAccessToken;
+    private String OAuthAccessTokenSecret;
 
     public LiveTwitterSource() {
         initializeTwitterStream();
@@ -44,10 +48,17 @@ public class LiveTwitterSource extends TwitterSource {
     // Create ConfigurationBuilder and pass in necessary credentials to authorize properly, then create TwitterStream.
     private void initializeTwitterStream() {
         ConfigurationBuilder cb = new ConfigurationBuilder();
-        cb.setOAuthConsumerKey("VBuOwzrzuWfKcPkN9eYyUP9vK")
+        TwitterAPI twitterAPI = new TwitterAPI();
+        /* cb.setOAuthConsumerKey("VBuOwzrzuWfKcPkN9eYyUP9vK")
                 .setOAuthConsumerSecret("gGIgqg86Y9qGc64UtlSiVkKDzbyBorEW2Cn6pC7LcjVwZKVLXp")
                 .setOAuthAccessToken("70967537-2l7GSGWUTRhmKBDmZA6KhzsHM7mCY3M4takahapMG")
-                .setOAuthAccessTokenSecret("9l0hpQNP0tbdSYrXwUFa2w5HYJRsYv2fjUO9ZIvbpYwet");
+                .setOAuthAccessTokenSecret("9l0hpQNP0tbdSYrXwUFa2w5HYJRsYv2fjUO9ZIvbpYwet"); */
+
+         cb.setOAuthConsumerKey(twitterAPI.getAuthConsumerKey())
+                .setOAuthConsumerSecret(twitterAPI.getOAuthConsumerSecret())
+                .setOAuthAccessToken(twitterAPI.getOAuthAccessToken())
+                .setOAuthAccessTokenSecret(twitterAPI.getOAuthAccessTokenSecret());
+
         // Pass the ConfigurationBuilder in when constructing TwitterStreamFactory.
         twitterStream = new TwitterStreamFactory(cb.build()).getInstance();
         initializeListener();

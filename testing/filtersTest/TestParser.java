@@ -1,17 +1,18 @@
-package filters.test;
+package testing.filtersTest;
 
 
 import filters.*;
 import org.junit.jupiter.api.Test;
-import org.openstreetmap.gui.jmapviewer.OsmTileLoader;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-
+import static org.junit.jupiter.api.Assertions.*;
 /**
  * Test the parser.
  */
 public class TestParser {
+
+    @Test
+    public void testParserInfo(){
+        System.out.printf("-------------------Testing Parser ----------------------\n");
+    }
     @Test
     public void testBasic() throws SyntaxError {
         Filter f = new Parser("trump").parse();
@@ -86,6 +87,7 @@ public class TestParser {
         assertFalse(x.toString().equals("((iphone and (ipad or (pc and laptop))) or (pc and not iphone))"));
         assertFalse(x.toString().equals("iphone and ipad or pc and laptop or pc and not iphone"));
     }
+
 
 
 

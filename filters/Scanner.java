@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 public class Scanner {
     private List<String> tokens;
 
+
     public Scanner(String input) {
         // This pattern matches words ([a-zA-Z]+), left and right parens, and whitespace
         Pattern tokenPattern = Pattern.compile("\\(|\\)|[a-zA-Z]+|\\s+");

@@ -7,7 +7,6 @@ import org.openstreetmap.gui.jmapviewer.Layer;
 import org.openstreetmap.gui.jmapviewer.MapMarkerCircle;
 import twitter4j.Status;
 import ui.MapMarkerFancy;
-import ui.MapMarkerSimple;
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
@@ -97,10 +96,10 @@ public class Query implements Observer {
     @Override
     public void update(Observable o, Object arg)  {
         Status status = (Status) arg;
-        checkFilterStatus(status);
+        visuallyExplore(status);
     }
 
-    private void checkFilterStatus(Status status) {
+    private void visuallyExplore(Status status) {
         Coordinate coord = statusCoordinate(status);
         String tweetContent = status.getText();
         String profilePicUrl = status.getUser().getProfileImageURL();
@@ -108,7 +107,7 @@ public class Query implements Observer {
         String username = status.getUser().getScreenName();
         String name = status.getUser().getName();
 
-        //MapMarkerSimple simple = new MapMarkerSimple(layer, coord); //task4, irrelevant
+        //MapMarkerSimple simple = new MapMarkerSimple(layer, coord); //task4
         MapMarkerFancy fancy = new MapMarkerFancy(layer, coord, color, tweetContent, profilePicture, profilePicUrl, username, name);
         if (filter.matches(status)) {
             mapMarker.add(fancy);

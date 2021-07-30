@@ -35,7 +35,7 @@ public class Application extends JFrame {
     private  String htmlContent;
     private void initialize() {
         // To use the live twitter stream, use the following line
-         twitterSource = new LiveTwitterSource();
+        twitterSource = new LiveTwitterSource();
 
         // To use the recorded twitter stream, use the following line
         // The number passed to the constructor is a speedup value:
@@ -138,7 +138,8 @@ public class Application extends JFrame {
                         MapMarkerFancy mapMarkerFancy = (MapMarkerFancy) mapmark;
                         color = mapMarkerFancy.getColor();
                         String hex = "#"+Integer.toHexString(color.getRGB()).substring(2);
-                        nameInfo += "<p>" + mapMarkerFancy.getName()+ " (@" + mapMarkerFancy.getUsername()+")</p>";
+                        nameInfo  += "<p style=\"background-color:"+hex+";\">";
+                        nameInfo +=  mapMarkerFancy.getName()+ " (@" + mapMarkerFancy.getUsername()+")</p>";
                         imageInfo += "<p style=\"background-color:"+hex+";\">";
                         imageInfo += "<img src=" + mapMarkerFancy.getprofilePictureURL() + ">";
                         tweet += mapMarkerFancy.getTweetContent() + "</p>";

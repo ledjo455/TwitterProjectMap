@@ -50,15 +50,15 @@ public class Parser {
     }
 
     private Filter expr() throws SyntaxError {
-        return orexpr();
+        return orExpr();
     }
 
-    private Filter orexpr() throws SyntaxError {
-        Filter sub = andexpr();
+    private Filter orExpr() throws SyntaxError {
+        Filter sub = andExpr();
         String token = scanner.peek();
         while (token != null && token.equals(OR)) {
             scanner.advance();
-            Filter right = andexpr();
+            Filter right = andExpr();
             // At this point we have two subexpressions ("sub" on the left and "right" on the right)
             // that are to be connected by "or"
             // TODO: Construct the appropriate new Filter object
@@ -69,12 +69,12 @@ public class Parser {
         return sub;
     }
 
-    private Filter andexpr() throws SyntaxError {
-        Filter sub = notexpr();
+    private Filter andExpr() throws SyntaxError {
+        Filter sub = notExpr();
         String token = scanner.peek();
         while (token != null && token.equals(AND)) {
             scanner.advance();
-            Filter right = notexpr();
+            Filter right = notExpr();
             // At this point we have two subexpressions ("sub" on the left and "right" on the right)
             // that are to be connected by "and"
             // TODO: Construct the appropriate new Filter object
@@ -85,11 +85,11 @@ public class Parser {
         return sub;
     }
 
-    private Filter notexpr() throws SyntaxError {
+    private Filter notExpr() throws SyntaxError {
         String token = scanner.peek();
         if (token.equals(NOT)) {
             scanner.advance();
-            Filter sub = notexpr();
+            Filter sub = notExpr();
             return new NotFilter(sub);
         } else {
             Filter sub = prim();

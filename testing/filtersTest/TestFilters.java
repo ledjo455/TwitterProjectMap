@@ -1,4 +1,4 @@
-package filters.test;
+package testing.filtersTest;
 
 import filters.*;
 import org.junit.jupiter.api.Test;
@@ -11,6 +11,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class TestFilters {
+
+    @Test
+    public void testFiltersInfo(){
+        System.out.printf("-------------------Testing Filters ----------------------\n");
+    }
     @Test
     public void testBasic() {
         Filter f = new BasicFilter("fred");
@@ -51,6 +56,7 @@ public class TestFilters {
         assertFalse(f.matches(makeStatus("pad ria")));
 
     }
+
 
     private Status makeStatus(String text) {
         return new Status() {

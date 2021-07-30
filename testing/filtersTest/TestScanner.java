@@ -1,4 +1,4 @@
-package filters.test;
+package testing.filtersTest;
 
 import filters.Scanner;
 import org.junit.jupiter.api.Test;
@@ -7,6 +7,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class TestScanner {
+
+    @Test
+    public void testScannerInfo(){
+        System.out.printf("-------------------Testing Scanner ----------------------\n");
+    }
+
     @Test
     public void testBasic() {
         Scanner x = new Scanner("trump");
