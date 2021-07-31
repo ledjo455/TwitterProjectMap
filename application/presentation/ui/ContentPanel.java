@@ -1,7 +1,7 @@
-package ui;
+package application.presentation.ui;
 
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
-import query.Query;
+import application.data.query.Query;
 
 import javax.swing.*;
 import java.awt.*;
@@ -52,7 +52,7 @@ public class ContentPanel extends JPanel {
         repaint();
     }
 
-    // Add a new query to the set of queries and update the UI to reflect the new query.
+    // Add a new application.data.query to the set of queries and update the UI to reflect the new application.data.query.
     public void addQuery(Query query) {
         JPanel newQueryPanel = new JPanel();
         newQueryPanel.setLayout(new GridBagLayout());

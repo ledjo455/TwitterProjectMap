@@ -1,4 +1,4 @@
-package util;
+package application.logic.util;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import twitter4j.GeoLocation;

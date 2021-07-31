@@ -1,6 +1,6 @@
-package ui;
+package application.presentation.ui;
 
-import query.Query;
+import application.data.query.Query;
 
 import javax.swing.*;
 import java.awt.*;
@@ -80,7 +80,7 @@ public class NewQueryPanel extends JPanel {
             }
         });
 
-        // This makes the "Enter" key submit the query.
+        // This makes the "Enter" key submit the application.data.query.
         app.getRootPane().setDefaultButton(addQueryButton);
 
         colorSetter.addMouseListener(new MouseAdapter() {

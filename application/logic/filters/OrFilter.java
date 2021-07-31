@@ -1,4 +1,4 @@
-package filters;
+package application.logic.filters;
 
 import twitter4j.Status;
 
@@ -16,7 +16,6 @@ public class OrFilter implements Filter {
 
     /**
      * An OR filter matches when either one of the children do
-     *
      * @param s the tweet to check
      * @return whether or not it matches
      */

@@ -1,4 +1,4 @@
-package filters;
+package application.logic.filters;
 
 import java.util.LinkedList;
 import java.util.List;

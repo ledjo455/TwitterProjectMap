@@ -1,4 +1,4 @@
-package util;
+package application.logic.util;
 
 import org.openstreetmap.gui.jmapviewer.interfaces.ICoordinate;
 

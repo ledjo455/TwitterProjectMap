@@ -1,7 +1,7 @@
 package testing.uiTest;
 
 import org.junit.jupiter.api.Test;
-import util.Util;
+import application.logic.util.Util;
 
 import java.awt.image.BufferedImage;
 

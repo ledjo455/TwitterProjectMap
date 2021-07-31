@@ -1,4 +1,4 @@
-package filters;
+package application.logic.filters;
 
 
 import twitter4j.Status;

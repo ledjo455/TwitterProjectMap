@@ -1,4 +1,4 @@
-package util;
+package application.logic.util;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Singleton that caches images loaded from twitter urls.
+ * Singleton that caches images loaded from application.data.twitter urls.
  */
 public class ImageCache {
     private static ImageCache theInstance = new ImageCache();
@@ -91,11 +91,11 @@ public class ImageCache {
 
     // I'm going to assume that hashing is good enough and collisions are rare enough
     private String saveImage(BufferedImage image, String path) {
-        File dir = new File("data/imagecache");
+        File dir = new File("application/data/imagecache");
         if (!dir.isDirectory()) {
             dir.mkdir();
         }
-        String pathString = "data/imagecache/" + path + ".png";
+        String pathString = "application/data/imagecache/" + path + ".png";
         File f = new File(pathString);
         pathString = f.getAbsolutePath();
         if (f.canRead()) return pathString;

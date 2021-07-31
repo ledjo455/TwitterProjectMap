@@ -1,4 +1,4 @@
-package twitter;
+package application.data.twitter;
 
 import twitter4j.Status;
 
@@ -9,7 +9,7 @@ import java.util.Observer;
  * ObserverImplementation Class is used for testing Twitter package implementing Observer design
  */
 
-public class ObserverImplementation implements Observer{
+public class ObserverImpl implements Observer{
 
     private int numberOfTweets = 0;
 

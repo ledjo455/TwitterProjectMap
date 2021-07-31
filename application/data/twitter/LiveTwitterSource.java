@@ -1,4 +1,4 @@
-package twitter;
+package application.data.twitter;
 
 import twitter4j.*;
 import twitter4j.conf.ConfigurationBuilder;
@@ -13,10 +13,6 @@ import twitter4j.conf.ConfigurationBuilder;
 public class LiveTwitterSource extends TwitterSource {
     private TwitterStream twitterStream;
     private StatusListener listener;
-    private String OAuthConsumerKey;
-    private String OAuthConsumerSecret;
-    private String OAuthAccessToken;
-    private String OAuthAccessTokenSecret;
 
     public LiveTwitterSource() {
         initializeTwitterStream();
@@ -37,7 +33,7 @@ public class LiveTwitterSource extends TwitterSource {
         listener = new StatusAdapter() {
             @Override
             public void onStatus(Status status) {
-                // This method is called each time a tweet is delivered by the twitter API
+                // This method is called each time a tweet is delivered by the application.data.twitter API
                 if (status.getPlace() != null) {
                     handleTweet(status);
                 }

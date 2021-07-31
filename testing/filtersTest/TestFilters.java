@@ -1,6 +1,6 @@
 package testing.filtersTest;
 
-import filters.*;
+import application.logic.filters.*;
 import org.junit.jupiter.api.Test;
 import twitter4j.*;
 

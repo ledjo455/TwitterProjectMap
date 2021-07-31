@@ -1,7 +1,7 @@
-package twitter;
+package application.data.twitter;
 
 import twitter4j.Status;
-import util.ObjectSource;
+import application.logic.util.ObjectSource;
 
 /**
  * A Twitter source that plays back a recorded stream of tweets.
@@ -15,7 +15,7 @@ public class PlaybackTwitterSource extends TwitterSource {
     // The speedup to apply to the recorded stream of tweets; 2 means play at twice the rate
     // at which the tweets were recorded
     private final double speedup;
-    private ObjectSource source = new ObjectSource("data/TwitterCapture.jobj");
+    private ObjectSource source = new ObjectSource("application/data/TwitterCapture.jobj");
     private boolean threadStarted = false;
 
     public PlaybackTwitterSource(double speedup) {

@@ -1,8 +1,8 @@
 package testing.twitterTest;
 
 import org.junit.jupiter.api.Test;
-import twitter.ObserverImplementation;
-import twitter.PlaybackTwitterSource;
+import application.data.twitter.ObserverImpl;
+import application.data.twitter.PlaybackTwitterSource;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,7 +17,7 @@ public class TestPlaybackTwitterSource {
     @Test
     public void testSetup() {
         PlaybackTwitterSource source = new PlaybackTwitterSource(1.0);
-        ObserverImplementation observerImpl = new ObserverImplementation();
+        ObserverImpl observerImpl = new ObserverImpl();
         System.out.printf("-------------------Testing Playback Twitter Source ------\n");
         // TODO: Once your TwitterSource class implements Observable, you must add the TestObserver as an observer to it here
         source.addObserver(observerImpl); // Using Observable I added the observer

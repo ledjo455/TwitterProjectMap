@@ -1,4 +1,4 @@
-package filters;
+package application.logic.filters;
 
 /**
  * Parse a string in the filter language and return the filter.
@@ -41,19 +41,19 @@ public class Parser {
         scanner = new Scanner(input);
     }
 
-    public Filter parse() throws SyntaxError {
+    public Filter parse() throws ParserSyntaxError {
         Filter ans = expr();
         if (scanner.peek() != null) {
-            throw new SyntaxError("Extra stuff at end of input");
+            throw new ParserSyntaxError("Extra stuff at end of input");
         }
         return ans;
     }
 
-    private Filter expr() throws SyntaxError {
+    private Filter expr() throws ParserSyntaxError {
         return orExpr();
     }
 
-    private Filter orExpr() throws SyntaxError {
+    private Filter orExpr() throws ParserSyntaxError {
         Filter sub = andExpr();
         String token = scanner.peek();
         while (token != null && token.equals(OR)) {
@@ -69,7 +69,7 @@ public class Parser {
         return sub;
     }
 
-    private Filter andExpr() throws SyntaxError {
+    private Filter andExpr() throws ParserSyntaxError {
         Filter sub = notExpr();
         String token = scanner.peek();
         while (token != null && token.equals(AND)) {
@@ -85,7 +85,7 @@ public class Parser {
         return sub;
     }
 
-    private Filter notExpr() throws SyntaxError {
+    private Filter notExpr() throws ParserSyntaxError {
         String token = scanner.peek();
         if (token.equals(NOT)) {
             scanner.advance();
@@ -97,13 +97,13 @@ public class Parser {
         }
     }
 
-    private Filter prim() throws SyntaxError {
+    private Filter prim() throws ParserSyntaxError {
         String token = scanner.peek();
         if (token.equals(LPAREN)) {
             scanner.advance();
             Filter sub = expr();
             if (!scanner.peek().equals(RPAREN)) {
-                throw new SyntaxError("Expected ')'");
+                throw new ParserSyntaxError("Expected ')'");
             }
             scanner.advance();
             return sub;

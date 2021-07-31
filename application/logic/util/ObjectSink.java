@@ -1,4 +1,4 @@
-package util;
+package application.logic.util;
 
 import java.io.*;
 

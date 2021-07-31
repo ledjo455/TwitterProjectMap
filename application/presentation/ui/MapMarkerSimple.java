@@ -1,4 +1,4 @@
-package ui;
+package application.presentation.ui;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.Layer;

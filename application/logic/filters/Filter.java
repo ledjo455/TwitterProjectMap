@@ -1,4 +1,4 @@
-package filters;
+package application.logic.filters;
 
 import twitter4j.Status;
 
@@ -17,7 +17,7 @@ public interface Filter {
 
     /**
      * This static method parses the given input string and creates a Filter
-     * that represents the query. If the input doesn't match the rules for
+     * that represents the application.data.query. If the input doesn't match the rules for
      * a filter that contains "and", "or", and/or "not" operators, it is treated
      * as a literal string to match.
      * @param queryString   the string containing the filter expression
@@ -26,15 +26,15 @@ public interface Filter {
     static Filter parse(String queryString) {
         try {
             return new Parser(queryString).parse();
-        } catch (SyntaxError syntaxError) {
+        } catch (ParserSyntaxError parserSyntaxError) {
             return new BasicFilter(queryString);
         }
     }
 
     /**
-     * Get all the terms (strings in basic filters) used in this filter.
-     * When we query the Twitter API, we must indicate all the terms we are
-     * interested in, and this allows us to collect them up for each active query.
+     * Get all the terms (strings in basic application.logic.filters) used in this filter.
+     * When we application.data.query the Twitter API, we must indicate all the terms we are
+     * interested in, and this allows us to collect them up for each active application.data.query.
      * @return      a list of terms mentioned in this filter
      */
     List<String> terms();
