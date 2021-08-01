@@ -1,5 +1,6 @@
 package application.presentation.ui;
 
+import application.data.twitter.SourceContext;
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.Layer;
@@ -7,7 +8,6 @@ import org.openstreetmap.gui.jmapviewer.interfaces.ICoordinate;
 import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 import org.openstreetmap.gui.jmapviewer.tilesources.BingAerialTileSource;
 import application.data.query.Query;
-import application.data.twitter.LiveTwitterSource;
 import application.data.twitter.TwitterSource;
 import application.logic.util.SphericalGeometry;
 import javax.swing.*;
@@ -33,13 +33,9 @@ public class Application extends JFrame {
     protected TwitterSource twitterSource;
     private  String htmlContent;
     private void initialize() {
-        // To use the live application.data.twitter stream, use the following line
-        twitterSource = new LiveTwitterSource();
-        // To use the recorded application.data.twitter stream, use the following line
-        // The number passed to the constructor is a speedup value:
-        //  1.0 - play back at the recorded speed
-        //  2.0 - play back twice as fast
-        //twitterSource = new PlaybackTwitterSource(60.0);
+        SourceContext sourceContext = new SourceContext();
+        twitterSource =  sourceContext.getLiveTwitter();
+        //twitterSource = context.getPlayBackTwitter();
         queries = new ArrayList<>();
     }
 

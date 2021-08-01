@@ -7,8 +7,6 @@ import twitter4j.conf.ConfigurationBuilder;
  * Encapsulates the connection to Twitter
  *
  * Terms to include in the returned tweets can be set with setFilterTerms
- *
- * Implements Observable - each received tweet is signalled to all observers
  */
 public class LiveTwitterSource extends TwitterSource {
     private TwitterStream twitterStream;
@@ -45,17 +43,13 @@ public class LiveTwitterSource extends TwitterSource {
     private void initializeTwitterStream() {
         ConfigurationBuilder cb = new ConfigurationBuilder();
         TwitterAPI twitterAPI = new TwitterAPI();
-        /* cb.setOAuthConsumerKey("VBuOwzrzuWfKcPkN9eYyUP9vK")
-                .setOAuthConsumerSecret("gGIgqg86Y9qGc64UtlSiVkKDzbyBorEW2Cn6pC7LcjVwZKVLXp")
-                .setOAuthAccessToken("70967537-2l7GSGWUTRhmKBDmZA6KhzsHM7mCY3M4takahapMG")
-                .setOAuthAccessTokenSecret("9l0hpQNP0tbdSYrXwUFa2w5HYJRsYv2fjUO9ZIvbpYwet"); */
 
          cb.setOAuthConsumerKey(twitterAPI.getAuthConsumerKey())
                 .setOAuthConsumerSecret(twitterAPI.getOAuthConsumerSecret())
                 .setOAuthAccessToken(twitterAPI.getOAuthAccessToken())
                 .setOAuthAccessTokenSecret(twitterAPI.getOAuthAccessTokenSecret());
 
-        // Pass the ConfigurationBuilder in when constructing TwitterStreamFactory.
+        // Passing the ConfigurationBuilder in when constructing TwitterStreamFactory.
         twitterStream = new TwitterStreamFactory(cb.build()).getInstance();
         initializeListener();
         twitterStream.addListener(listener);

@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Singleton that caches images loaded from application.data.twitter urls.
+ * Singleton that caches images loaded from twitter urls.
  */
 public class ImageCache {
     private static ImageCache theInstance = new ImageCache();

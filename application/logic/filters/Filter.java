@@ -25,7 +25,7 @@ public interface Filter {
      */
     static Filter parse(String queryString) {
         try {
-            return new Parser(queryString).parse();
+            return new ParserContext(queryString).parse();
         } catch (ParserSyntaxError parserSyntaxError) {
             return new BasicFilter(queryString);
         }

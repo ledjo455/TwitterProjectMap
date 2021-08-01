@@ -16,7 +16,7 @@ import static application.logic.util.Util.statusCoordinate;
 
 
 /**
- * A application.data.query over the application.data.twitter stream.
+ * A query over the twitter stream.
  * TODO: Task 4: you are to complete this class.
  */
 public class Query implements Observer {
@@ -75,6 +75,10 @@ public class Query implements Observer {
         visuallyExplore(status);
     }
 
+    /**
+     * Used For displaying markers on the map with profile picture and color
+     * @parameter Status is the tweet
+     */
     private void visuallyExplore(Status status) {
         Coordinate coord = statusCoordinate(status);
         String tweetContent = status.getText();

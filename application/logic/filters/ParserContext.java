@@ -29,7 +29,7 @@ package application.logic.filters;
  * To be parsed like:
  *      blue or (green and (not red)) or (yellow and purple)
  */
-public class Parser {
+public class ParserContext {
     private final Scanner scanner;
     private static final String LPAREN = "(";
     private static final String RPAREN = ")";
@@ -37,7 +37,7 @@ public class Parser {
     private static final String AND = "and";
     private static final String NOT = "not";
 
-    public Parser(String input) {
+    public ParserContext(String input) {
         scanner = new Scanner(input);
     }
 
