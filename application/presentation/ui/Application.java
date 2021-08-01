@@ -24,13 +24,13 @@ import java.util.Timer;
  */
 public class Application extends JFrame {
     // The content panel, which contains the entire UI
-    private final ContentPanel contentPanel;
+    protected final ContentPanel contentPanel;
     // The provider of the tiles for the map, we use the Bing source
     private BingAerialTileSource bing;
     // All of the active queries
     private List<Query> queries = new ArrayList<>();
     // The source of tweets, a TwitterSource, either live or playback
-    private TwitterSource twitterSource;
+    protected TwitterSource twitterSource;
     private  String htmlContent;
     private void initialize() {
         // To use the live application.data.twitter stream, use the following line
@@ -43,28 +43,18 @@ public class Application extends JFrame {
         queries = new ArrayList<>();
     }
 
-    /**
-     * A new application.data.query has been entered via the User Interface
-     * @param   query   The new application.data.query object
-     */
+
 
     public void addQuery(Query query) {
         queries.add(query);
-        Set<String> allterms = getQueryTerms();
+        Set<String> allterms = this.getQueryTerms();
         twitterSource.setFilterTerms(allterms);
         contentPanel.addQuery(query);
         // TODO: This is the place where you should connect the new application.data.query to the application.data.twitter source
         twitterSource.addObserver(query);
     }
 
-    /**
-     * return a list of all terms mentioned in all queries. The live application.data.twitter source uses this
-     * to request matching tweets from the Twitter API.
-     * @return
-     */
-
-
-    private Set<String> getQueryTerms() {
+    protected Set<String> getQueryTerms() {
         Set<String> ans = new HashSet<>();
         for (Query q : queries) {
             ans.addAll(q.getFilter().terms());
@@ -72,9 +62,6 @@ public class Application extends JFrame {
         return ans;
     }
 
-    /**
-     * Constructs the {@code Application}.
-     */
     public Application() {
         super("Twitter content viewer");
         setSize(300, 300);
@@ -85,22 +72,29 @@ public class Application extends JFrame {
         mapInitialize();
         Coordinate coord = new Coordinate(0, 0);
         Timer bingTimer = new Timer();
-        TimerTask bingAttributionCheck = new TimerTask() {
-            @Override
-            public void run() {
-                // This is the best method we've found to determine when the Bing application.data has been loaded.
-                // We use this to trigger zooming the map so that the entire world is visible.
-                if (!bing.getAttributionText(0, coord, coord).equals("Error loading Bing attribution application.data")) {
-                    map().setZoom(2);
-                    bingTimer.cancel();
-                }
-            }
-        };
+        TimerTask bingAttributionCheck = getTimerTask(coord, bingTimer);
         bingTimer.schedule(bingAttributionCheck, 100, 200);
        // Set up a motion listener to create a tooltip showing the tweets at the pointer position
         addMouseMapMarkerMotion();
 
 
+    }
+
+    private TimerTask getTimerTask(Coordinate coord, Timer bingTimer) {
+        TimerTask bingAttributionCheck = new TimerTask() {
+            @Override
+            public void run() {
+                assureBingLoad(coord, bingTimer);
+            }
+        };
+        return bingAttributionCheck;
+    }
+
+    private void assureBingLoad(Coordinate coord, Timer bingTimer) {
+        if (!bing.getAttributionText(0, coord, coord).equals("Error loading Bing attribution data")) {
+            map().setZoom(2);
+            bingTimer.cancel();
+        }
     }
 
     private void mapInitialize() {
@@ -129,25 +123,28 @@ public class Application extends JFrame {
                 // TODO: Use the following method to set the text that appears at the mouse cursor
                 map().setToolTipText("");
                 List<MapMarker> mapMarkers = getMarkersCovering(pos, pixelWidth(p));
-                if (!mapMarkers.isEmpty()) {
-                    htmlContent ="<!DOCTYPE html>";
-                    htmlContent = "<html>";
-                    for (MapMarker mapmark : mapMarkers) {
-                        MapMarkerFancy mapMarkerFancy = (MapMarkerFancy) mapmark;
-                        Color color = mapMarkerFancy.getColor();
-                        String hex = "#"+Integer.toHexString(color.getRGB()).substring(2);
-                        String nameInfo  = "<p style=\"background-color:"+hex+";\">";
-                        nameInfo +=  mapMarkerFancy.getName()+ " (@" + mapMarkerFancy.getUsername()+")</p>";
-                        String imageInfo = "<p style=\"background-color:"+hex+";\">";
-                        imageInfo += "<img src=" + mapMarkerFancy.getprofilePictureURL() + ">";
-                        String tweet = mapMarkerFancy.getTweetContent() + "</p>";
-                        htmlContent += nameInfo + imageInfo + tweet +"</html>";
-                    }
-                    //htmlContent += nameInfo + imageInfo + tweet +"</html>";
-                    map().setToolTipText(htmlContent);
-                }
+                visualTweetMouseCursor(mapMarkers);
             }
         });
+    }
+
+    private void visualTweetMouseCursor(List<MapMarker> mapMarkers) {
+        if (!mapMarkers.isEmpty()) {
+            htmlContent ="<!DOCTYPE html>";
+            htmlContent = "<html>";
+            for (MapMarker mapmark : mapMarkers) {
+                MapMarkerFancy mapMarkerFancy = (MapMarkerFancy) mapmark;
+                Color color = mapMarkerFancy.getColor();
+                String hex = "#"+Integer.toHexString(color.getRGB()).substring(2);
+                String nameInfo  = "<p style=\"background-color:"+hex+";\">";
+                nameInfo +=  mapMarkerFancy.getName()+ " (@" + mapMarkerFancy.getUsername()+")</p>";
+                String imageInfo = "<p style=\"background-color:"+hex+";\">";
+                imageInfo += "<img src=" + mapMarkerFancy.getprofilePictureURL() + ">";
+                String tweet = mapMarkerFancy.getTweetContent() + "</p>";
+                htmlContent += nameInfo + imageInfo + tweet +"</html>";
+            }
+            map().setToolTipText(htmlContent);
+        }
     }
 
     // How big is a single pixel on the map?  We use this to compute which tweet markers
@@ -187,16 +184,10 @@ public class Application extends JFrame {
         return contentPanel.getViewer();
     }
 
-    /*
-    /**
-     * @param args Application program arguments (which are ignored)
-     /*
-    public static void main(String[] args) {
-        new Application().setVisible(true);
-    } */
 
     // Update which queries are visible after any checkBox has been changed
     public void updateVisibility() {
+
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 System.out.println("Recomputing visible queries");

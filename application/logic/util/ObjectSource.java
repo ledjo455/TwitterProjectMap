@@ -32,11 +32,4 @@ public class ObjectSource {
         return o;
     }
 
-    public void close() {
-        try {
-            instream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

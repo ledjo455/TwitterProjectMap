@@ -23,29 +23,34 @@ public class NewQueryPanel extends JPanel {
     public NewQueryPanel(Application app) {
         this.app = app;
         this.colorSetter = new JPanel();
-
         random = new Random();
 
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
 
         queryLabel.setLabelFor(newQuery);
         GridBagConstraints c = new GridBagConstraints();
-        c.gridwidth = GridBagConstraints.RELATIVE;
-        c.fill = GridBagConstraints.NONE;
-        c.gridy = 0;
-        c.gridx = 0;
-        add(queryLabel, c);
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        c.fill = GridBagConstraints.HORIZONTAL;
-        newQuery.setMaximumSize(new Dimension(200, 20));
-        c.gridx = 1;
-        add(newQuery, c);
-
-        add(Box.createRigidArea(new Dimension(5, 5)));
-
+        horizontalGridBag(c);
         JLabel colorLabel = new JLabel("Select Color: ");
         colorSetter.setBackground(getRandomColor());
+        bothGridBagConstraint(c, colorLabel);
+        JButton addQueryButton = newSearchGrid(c);
+        setBorder();
+        addQueryListener(addQueryButton);
+        // This makes the "Enter" key submit the query.
+        app.getRootPane().setDefaultButton(addQueryButton);
+        colorSetterMouseListener(app);
+    }
 
+    private JButton newSearchGrid(GridBagConstraints c) {
+        JButton addQueryButton = new JButton("Add New Search");
+        c.gridx = GridBagConstraints.RELATIVE;       //aligned with button 2
+        c.gridwidth = 2;   //2 columns wide
+        c.gridy = GridBagConstraints.RELATIVE;       //third row
+        add(addQueryButton, c);
+        return addQueryButton;
+    }
+
+    private void bothGridBagConstraint(GridBagConstraints c, JLabel colorLabel) {
         c.gridwidth = GridBagConstraints.RELATIVE;
         c.fill = GridBagConstraints.NONE;
         c.gridy = 1;
@@ -58,31 +63,24 @@ public class NewQueryPanel extends JPanel {
         add(colorSetter, c);
 
         add(Box.createRigidArea(new Dimension(5, 5)));
+    }
 
-        JButton addQueryButton = new JButton("Add New Search");
-        c.gridx = GridBagConstraints.RELATIVE;       //aligned with button 2
-        c.gridwidth = 2;   //2 columns wide
-        c.gridy = GridBagConstraints.RELATIVE;       //third row
-        add(addQueryButton, c);
+    private void horizontalGridBag(GridBagConstraints c) {
+        c.gridwidth = GridBagConstraints.RELATIVE;
+        c.fill = GridBagConstraints.NONE;
+        c.gridy = 0;
+        c.gridx = 0;
+        add(queryLabel, c);
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        newQuery.setMaximumSize(new Dimension(200, 20));
+        c.gridx = 1;
+        add(newQuery, c);
 
-        setBorder(
-                BorderFactory.createCompoundBorder(
-                        BorderFactory.createTitledBorder("New Search"),
-                        BorderFactory.createEmptyBorder(5,5,5,5)));
+        add(Box.createRigidArea(new Dimension(5, 5)));
+    }
 
-        addQueryButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (!newQuery.getText().equals("")) {
-                    addQuery(newQuery.getText().toLowerCase());
-                    newQuery.setText("");
-                }
-            }
-        });
-
-        // This makes the "Enter" key submit the application.data.query.
-        app.getRootPane().setDefaultButton(addQueryButton);
-
+    private void colorSetterMouseListener(Application app) {
         colorSetter.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -98,6 +96,25 @@ public class NewQueryPanel extends JPanel {
                 }
             }
         });
+    }
+
+    private void addQueryListener(JButton addQueryButton) {
+        addQueryButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!newQuery.getText().equals("")) {
+                    addQuery(newQuery.getText().toLowerCase());
+                    newQuery.setText("");
+                }
+            }
+        });
+    }
+
+    private void setBorder() {
+        setBorder(
+                BorderFactory.createCompoundBorder(
+                        BorderFactory.createTitledBorder("New Search"),
+                        BorderFactory.createEmptyBorder(5,5,5,5)));
     }
 
     private void addQuery(String newQuery) {
